@@ -1,0 +1,187 @@
+.body{
+    background: #65a4ce;
+    padding-top: 1ch;
+  }
+  
+  .container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10ch;
+  }
+  .image {
+    height: 200px;
+    width: 200px;
+  }
+  
+  .table {
+    
+    width: 90%;
+    border-collapse: collapse;
+  }
+  
+  .table td,
+  .table th {
+    border: 2px solid black; /* You need to specify the color here */
+    padding: 8px; /* Add padding for better spacing */
+  }
+  .heading{
+    text-align: center;
+  }
+.large-form {
+    width: 400px;
+}
+
+.input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    
+}
+.button{
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.button:hover{
+  background-color: #181616;
+  color: #ffffff;
+}
+.del-button:hover{
+  background-color: #181616;
+  color: #ffffff;
+}
+.edit-button:hover{
+  background-color: #181616;
+  color: #ffffff;
+}
+.del-button{
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.edit-button{
+  border:none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.del-button{
+background: #db1616;
+color: azure;
+width: 100px;
+height: 50px;
+}
+.edit-button{
+    background: #1c9b0e;
+    color: azure;
+    width: 100px;
+    height: 50px;
+}
+/* Style for the login container */
+.login-container {
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Style for the input fields */
+.Input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Style for the login button */
+.login-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.login-button:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+/* Style for error messages */
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+/* Style for the "Sign up" link */
+.signup-link {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Hover effect for the "Sign up" link */
+.signup-link:hover {
+  color: #0056b3;
+}
+.login-message{
+  size: 100px;
+}
+.card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.container {
+  padding: 10px;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #45a049;
+  color: white;
+}
+
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+
