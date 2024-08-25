@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const URL = process.env.BASE_URL || 'http://localhost:5000';
+const URL = process.env.BASE_URL || 'http://localhost:3000';
 
 export default function ForgetPassword() {
   const [users, setUsers] = useState([]);

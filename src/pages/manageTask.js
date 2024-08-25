@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from "./axiosInstance";
 
-const URL = process.env.BASE_URL || 'http://localhost:5000';
+const URL = process.env.BASE_URL || 'http://localhost:3000';
 
 export default function ManageTask() {
     let config = {
@@ -67,14 +67,6 @@ export default function ManageTask() {
             // Handle other status codes
             alert('An error occurred');
         }
-        
-    // } catch (error) {
-    //     if (error.response && (error.response.status === 400 || error.response.status === 409)) {
-    //         alert('Task already exists');
-    //     } else {
-    //         console.error('Error:', error);
-    //     }
-    // }
 
     }
         const handleTaskManageSubmit = ((e) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from "./axiosInstance";
 
-const URL = process.env.BASE_URL || 'http://localhost:5000';
+const URL = process.env.BASE_URL || 'http://localhost:3000';
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -66,13 +66,11 @@ export default function Login() {
             const response = await axiosInstance.post(`${URL}/user/loginuser`, { username, password }, config);
 
             if (response.data.status === 200) {
-                alert('Login successful');
                 setLogin(true);
-                navigate('/book')
+                navigate('/')
                 const userId = response.data.userId;
                 const role = response.data.role;
                 localStorage.setItem('loggedIn', 'true');
-                // localStorage.setItem('role', role);
                 localStorage.setItem('userId', userId);
                 localStorage.setItem('role', role);
                 setUsername('');

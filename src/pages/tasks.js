@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from "./axiosInstance";
 
-const URL = process.env.BASE_URL || 'http://localhost:5000';
+const URL = process.env.BASE_URL || 'http://localhost:3000';
 
 
 export default function Task() {

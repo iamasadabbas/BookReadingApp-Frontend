@@ -35,7 +35,7 @@ export default function Protected(props) {
         )
     }
     return (
-        <div>only amdin can access
+        <div>only admin can access
         </div>
     )
 }

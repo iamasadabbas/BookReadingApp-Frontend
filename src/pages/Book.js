@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/Book.css';
-import { Worker } from '@react-pdf-viewer/core';
-import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import axiosInstance from './axiosInstance';
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +9,11 @@ let config = {
     headers: { 'Content-Type': 'application/json' },
 }
 
-
-const BASE_URL = process.env.BASE_URL || 'http://localhost:5000';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 export default function Book() {
-    const navigate = useNavigate()
+    const role = localStorage.getItem('role');
+    const navigate = useNavigate();
 
     const [books, setBooks] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -26,33 +24,23 @@ export default function Book() {
     const [logintext, setLoginText] = useState('');
     const [bookId, setBookId] = useState([]);
     const [bookmarkedPage, setBookmarkedPage] = useState(0);
-    // const editEntry = async (book) => {
-    //     setInputValue(book.title);
-    //     setSelectedImage(book.coverImage);
-    //     setEditingBook(book);
-    //     setHeading('Update books here')
-    // }
+
     const checkBookmark = async (id) => {
         const updatedBookIds = [];
-        const userId = localStorage.getItem('userId')
+        const userId = localStorage.getItem('userId');
         axiosInstance.get(`${BASE_URL}/bookmark/getbookmark/${userId}`, config).then((response) => {
-
             for (let index = 0; index < response.data.length; index++) {
                 const element = response.data[index];
                 updatedBookIds.push(element.bookId);
 
-
-                if (element?.bookId == id) {
+                if (element?.bookId === id) {
                     setBookmarkedPage(element?.pageNumber);
-                    // navigate('/view')
-                }
-                else {
-                    console.log('no bookmarked page');
+                } else {
+                    console.log('No bookmarked page');
                 }
             }
             setBookId(updatedBookIds);
-
-        })
+        });
     }
 
     const handleUpdate = async () => {
@@ -71,23 +59,19 @@ export default function Book() {
     }
 
     const readBook = async (book) => {
-
         try {
-
-            const response = await axiosInstance.get(`${BASE_URL}/book/getbookbybookfile/${book.bookFile}`, { responseType: 'arraybuffer' }, config)
+            const response = await axiosInstance.get(`${BASE_URL}/book/getbookbybookfile/${book.bookFile}`, { responseType: 'arraybuffer' }, config);
             const blob = new Blob([response.data], { type: 'application/pdf' });
             let url = URL.createObjectURL(blob);
 
-            localStorage.setItem('url', url)
-            localStorage.setItem('bookId', book._id)
-            navigate('/view')
-
-        }
-        catch (error) {
+            localStorage.setItem('url', url);
+            localStorage.setItem('bookId', book._id);
+            navigate('/view');
+        } catch (error) {
             console.error(error);
         }
-
     }
+
     const deleteEntry = (id) => {
         axios.delete(`${BASE_URL}/book/deletebook/${id}`).then(() => {
             axios.get(`${BASE_URL}/book/getallbook`).then((response) => {
@@ -106,10 +90,10 @@ export default function Book() {
     const handleImageChange = (event) => {
         setSelectedImage(event.target.files[0]);
     }
+
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     }
-
 
     const handleSubmit = async () => {
         const formData = new FormData();
@@ -123,6 +107,8 @@ export default function Book() {
                 alert('Data added successfully');
                 setInputValue('');
                 setSelectedImage(null);
+                setSelectedFile(null);
+                setHeading('Add books');
             } else {
                 console.error("Error while saving data");
             }
@@ -134,14 +120,11 @@ export default function Book() {
 
     useEffect(() => {
         axiosInstance.get(`${BASE_URL}/book/getallbook`, config).then((response) => {
-            // console.log(response)
             if (response?.data?.message === "Not authorized") {
                 setBooks([]);
-                setLoginText('login first to see all books')
+                setLoginText('login first to see all books');
             } else {
-
                 setBooks(response.data);
-                console.log(bookId);
             }
         }).catch((error) => {
             console.error('Error fetching books:', error);
@@ -152,54 +135,60 @@ export default function Book() {
 
     useEffect(() => {
         localStorage.setItem('bookmarkedPage', bookmarkedPage);
-        console.log(bookmarkedPage);
     }, [bookmarkedPage]);
 
     return (
         <div className='body'>
-            <div>{!books.length == 0 ? (
-                <>
-                    <h2 className='heading'>Books data</h2>
-                    <div className='container'>
-                        {books?.map((book) => (
-                            <div className="card" >
-                                <img src={`${BASE_URL}/uploads/bookCoverImage/${book.coverImage}`} alt="Avatar" />
-                                <div class="container">
-                                    <h4 className='book-title'><b>{book.title}</b></h4><br />
-                                    <button className='button'onClick={() => readBook(book)}>Read</button>
-                                    {bookId.includes(book._id) ? (
-
-                                        <button className='button' onClick={() => {checkBookmark(book?._id);readBook(book)}}>continue reading</button>
-                                    ) : (
-                                        <></>
-                                    )}
+            <div>
+                {books.length > 0 && (
+                    <>
+                        <h2 className='heading'>Books data</h2>
+                        <div className='container'>
+                            {books?.map((book) => (
+                                <div className="card" key={book._id}>
+                                    <img src={`${BASE_URL}/uploads/bookCoverImage/${book.coverImage}`} alt="Book Cover" />
+                                    <div className="container-book">
+                                        <h2 className='book-title'>{book.title}</h2>
+                                        <button className='button' onClick={() => readBook(book)}>Read</button>
+                                        {bookId.includes(book._id) && (
+                                            <button className='button' onClick={() => { checkBookmark(book._id); readBook(book); }}>
+                                                Continue Reading
+                                            </button>
+                                        )}
+                                        {role === "admin" && (
+                                            <button className='button' onClick={() => deleteEntry(book._id)}>Delete</button>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+                    </>
+                )}
 
+                {role === "admin" && (
+                    <div>
+                        <h1 className='heading'>{heading}</h1>
+                        <div className='container'>
+                            <form onSubmit={editingBook ? handleUpdate : handleSubmit} className='large-form'>
+                                <label className='label'>Title</label>
+                                <input className='input' required type='text' value={inputValue} onChange={handleChange} placeholder='Enter title here' />
+                                <br />
+                                <label className='label'>Cover Image</label>
+                                <input className='input' required type='file' onChange={handleImageChange} />
+                                <label className='label'>File</label>
+                                <input className='input' required type='file' onChange={handleFileChange} />
+                                <button className='button' type='submit'>{editingBook ? 'Update' : 'Submit'}</button>
+                            </form>
+                        </div>
                     </div>
-                    <h1 className='heading'>{heading}</h1>
-                    <div className='container'>
-                        <form onSubmit={editingBook ? handleUpdate : handleSubmit} className='large-form'>
-                            <label className='label'>Title</label>
-                            <input className='input' required type='text' value={inputValue} onChange={handleChange} placeholder='Enter title here' />
-                            <br />
-                            <label className='label'>Cover Image</label>
-                            <input className='input' required type='file' onChange={handleImageChange}></input>
-                            <label className='label'>file</label>
-                            <input className='input' required type='file' onChange={handleFileChange}></input>
-                            <button className='button' type='submit'>{editingBook ? 'Update' : 'Submit'}</button>
-                        </form>
+                )}
+
+                {books.length === 0 && role !== "admin" && (
+                    <div>
+                        <h2 className='heading'>{logintext || 'No books available'}</h2>
                     </div>
-
-                </>) : (
-                <div>
-                    <p>{logintext}</p>
-                </div>
-
-            )}
+                )}
             </div>
-
         </div>
     );
 }

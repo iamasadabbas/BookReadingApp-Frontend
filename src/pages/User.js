@@ -5,7 +5,7 @@ let config = {
   headers: { 'Content-Type': 'application/json' },
 }
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:5000'
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 
 export default function User() {
   const taskName='view'
@@ -174,7 +174,9 @@ export default function User() {
               </tbody>
             </table>
           </div>
-          <h1 className='heading'>{heading}</h1>
+          {editingUser ? (
+            <>
+            <h1 className='heading'>{heading}</h1>
           <div className='container'>
             <form onSubmit={editingUser ? handleUpdate : handleSubmit} className='large-form'>
               <label className='label'>Username</label>
@@ -183,12 +185,12 @@ export default function User() {
               <label className='label'>Email</label>
               <input className='input' required type='email' value={inputEmail} onChange={handleChangeEmail} placeholder='Enter email here' />
               <br />
-              <label className='label'>Password</label>
-              <input className='input' required type='password' value={inputPassword} onChange={handleChangePassword} placeholder='Enter password here' />
-              <br />
               <button className='button' type='submit'>{editingUser ? 'Update' : 'Submit'}</button>
             </form>
+
           </div>
+          </>):(null)}
+          
         </>) : (
         <div>
           <p>{logintext}</p>

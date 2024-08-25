@@ -1,6 +1,7 @@
 .body{
     background: #65a4ce;
     padding-top: 1ch;
+    height: 145vh;
   }
   
   .container{
@@ -9,6 +10,13 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 10ch;
+  }
+  .container-book{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
   .image {
     height: 200px;
@@ -34,7 +42,7 @@
 }
 
 .input{
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -42,7 +50,7 @@
     
 }
 .button{
-    width: 100%;
+    width: 100px;
     padding: 10px;
     background-color: #007bff;
     color: white;
@@ -66,6 +74,9 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+.book-title{
+  display: block;
 }
 .edit-button{
   border:none;
@@ -96,7 +107,7 @@ height: 50px;
 
 /* Style for the input fields */
 .Input {
-  width: 100%;
+  width: 93%;
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ccc;
